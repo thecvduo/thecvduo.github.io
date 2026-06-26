@@ -43,14 +43,37 @@
           <!-- Original Text Logo -->
           <a href="index.html" class="flex-shrink-0 text-xl font-semibold tracking-tight text-white">The CV Duo</a>
 
-          <nav class="flex flex-wrap items-center gap-2 text-sm font-semibold">
-            <a href="index.html" aria-current="page" class="rounded-full border border-sky-400/50 bg-sky-500/10 px-4 py-2 text-sky-200 transition hover:bg-sky-500/20">پەڕەی سەرەتا</a>
-            <a href="services.html" class="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-slate-100 transition hover:bg-white/20">نرخ و خزمەتگوزارییەکان</a>
-            <a href="portfolio.html" class="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-slate-100 transition hover:bg-white/20">نموونەی کارەکانمان</a>
-            <a href="order.html" class="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-slate-100 transition hover:bg-white/20">داواکردنی خزمەتگوزاری</a>
+          <button id="menu-btn" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="کردنەوەی مینیو"
+            class="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 p-2.5 text-slate-100 transition hover:bg-white/20 md:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+
+          <nav id="site-nav" class="hidden w-full flex-col items-stretch gap-2 text-sm font-semibold md:flex md:w-auto md:flex-row md:items-center md:gap-3">
+            <a href="index.html" aria-current="page" class="rounded-full border border-sky-400/50 bg-sky-500/10 px-4 py-2 text-sky-200 transition hover:bg-sky-500/20 w-full text-center md:w-auto">پەڕەی سەرەتا</a>
+            <a href="services.html" class="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-slate-100 transition hover:bg-white/20 w-full text-center md:w-auto">نرخ و خزمەتگوزارییەکان</a>
+            <a href="portfolio.html" class="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-slate-100 transition hover:bg-white/20 w-full text-center md:w-auto">نموونەی کارەکانمان</a>
+            <a href="order.html" class="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-slate-100 transition hover:bg-white/20 w-full text-center md:w-auto">داواکردنی خزمەتگوزاری</a>
           </nav>
         </div>
       </header>
+      <script>
+        (function () {
+          var btn = document.getElementById('menu-btn');
+          var nav = document.getElementById('site-nav');
+          if (!btn || !nav) return;
+          btn.addEventListener('click', function () {
+            var willOpen = nav.classList.contains('hidden');
+            nav.classList.toggle('hidden');
+            nav.classList.toggle('flex');
+            btn.setAttribute('aria-expanded', String(willOpen));
+          });
+        })();
+      </script>
+
 
       <main class="relative">
         <section class="mx-auto w-full max-w-6xl px-6 pb-16 pt-20 md:pt-28">
