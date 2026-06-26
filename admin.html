@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The CV Duo | ئەدمین</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+    <div class="relative min-h-screen overflow-hidden">
+      <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.18),_transparent_45%),radial-gradient(circle_at_85%_80%,_rgba(139,92,246,0.16),_transparent_35%)]"></div>
+
+      <header class="relative border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
+        <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-5">
+          <a href="index.html" class="text-xl font-semibold tracking-tight text-white">The CV Duo <span class="text-sm font-normal text-slate-400">/ ئەدمین</span></a>
+          <button id="logout-btn" class="hidden rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-white/20">چوونەدەرەوە</button>
+        </div>
+      </header>
+
+      <main class="relative mx-auto w-full max-w-4xl px-6 pb-24 pt-16 md:pt-20">
+
+        <!-- LOGIN -->
+        <section id="login-section" class="mx-auto max-w-md">
+          <h1 class="mb-8 text-right text-3xl font-bold text-white">چوونەژوورەوە</h1>
+          <form id="login-form" class="space-y-5 rounded-3xl border border-white/10 bg-white/5 p-7 shadow-xl shadow-black/20 backdrop-blur-sm" novalidate>
+            <div>
+              <label for="email" class="mb-2 block text-right text-sm font-semibold text-slate-200">ئیمەیل</label>
+              <input id="email" name="email" type="email" required dir="ltr"
+                class="w-full rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-left text-slate-100 placeholder:text-slate-500 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/30" />
+            </div>
+            <div>
+              <label for="password" class="mb-2 block text-right text-sm font-semibold text-slate-200">وشەی نهێنی</label>
+              <input id="password" name="password" type="password" required dir="ltr"
+                class="w-full rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-left text-slate-100 placeholder:text-slate-500 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/30" />
+            </div>
+            <button type="submit" class="w-full rounded-full bg-sky-500 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-sky-500/30 transition hover:bg-sky-400">چوونەژوورەوە</button>
+            <p id="login-error" class="hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-5 py-3 text-right text-sm text-red-200 [unicode-bidi:plaintext]"></p>
+          </form>
+        </section>
+
+        <!-- DASHBOARD -->
+        <section id="dashboard-section" class="hidden">
+          <div class="mb-8 flex flex-wrap items-center justify-between gap-4">
+            <h1 class="text-right text-3xl font-bold text-white">داواکارییەکان</h1>
+            <span id="count-badge" class="rounded-full border border-sky-400/40 bg-sky-500/10 px-4 py-1.5 text-sm font-semibold text-sky-200"></span>
+          </div>
+
+          <p id="empty-state" class="hidden rounded-3xl border border-white/10 bg-white/5 p-10 text-center text-slate-400">
+            هیچ داواکارییەک نییە تا ئێستا.
+          </p>
+
+          <div id="requests-list" class="space-y-5"></div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module">
+      import { firebaseConfig } from './firebase-config.js';
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js';
+      import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js';
+      import { getFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      const loginSection = document.getElementById('login-section');
+      const dashboardSection = document.getElementById('dashboard-section');
+      const loginForm = document.getElementById('login-form');
+      const loginError = document.getElementById('login-error');
+      const logoutBtn = document.getElementById('logout-btn');
+      const requestsList = document.getElementById('requests-list');
+      const emptyState = document.getElementById('empty-state');
+      const countBadge = document.getElementById('count-badge');
+
+      let unsubscribeRequests = null;
+
+      const statusMeta = {
+        new: { label: 'تازە', classes: 'border-sky-400/40 bg-sky-500/10 text-sky-200' },
+        in_progress: { label: 'لە کارەکردنیدا', classes: 'border-amber-400/40 bg-amber-500/10 text-amber-200' },
+        done: { label: 'تەواوبووە', classes: 'border-emerald-400/40 bg-emerald-500/10 text-emerald-200' }
+      };
+
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        loginError.classList.add('hidden');
+        try {
+          await signInWithEmailAndPassword(auth, loginForm.email.value.trim(), loginForm.password.value);
+          loginForm.reset();
+        } catch (err) {
+          console.error(err);
+          loginError.textContent = 'ئیمەیل یان وشەی نهێنی هەڵەیە.';
+          loginError.classList.remove('hidden');
+        }
+      });
+
+      logoutBtn.addEventListener('click', () => signOut(auth));
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          loginSection.classList.add('hidden');
+          dashboardSection.classList.remove('hidden');
+          logoutBtn.classList.remove('hidden');
+          startListening();
+        } else {
+          dashboardSection.classList.add('hidden');
+          loginSection.classList.remove('hidden');
+          logoutBtn.classList.add('hidden');
+          if (unsubscribeRequests) { unsubscribeRequests(); unsubscribeRequests = null; }
+        }
+      });
+
+      function startListening() {
+        const q = query(collection(db, 'requests'), orderBy('createdAt', 'desc'));
+        unsubscribeRequests = onSnapshot(q, (snapshot) => {
+          requestsList.innerHTML = '';
+          countBadge.textContent = snapshot.size + ' داواکاری';
+
+          if (snapshot.empty) {
+            emptyState.classList.remove('hidden');
+            return;
+          }
+          emptyState.classList.add('hidden');
+
+          snapshot.forEach((docSnap) => {
+            requestsList.appendChild(renderCard(docSnap.id, docSnap.data()));
+          });
+        }, (err) => {
+          console.error(err);
+        });
+      }
+
+      function renderCard(id, data) {
+        const meta = statusMeta[data.status] || statusMeta.new;
+        const date = data.createdAt ? data.createdAt.toDate().toLocaleString('ckb') : '';
+
+        const card = document.createElement('article');
+        card.className = 'rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl shadow-black/20 backdrop-blur-sm';
+        card.innerHTML = `
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div class="text-right">
+              <h3 class="text-xl font-bold text-white [unicode-bidi:plaintext]">${escapeHtml(data.name || '-')}</h3>
+              <p class="mt-1 text-sm text-slate-400">${escapeHtml(date)}</p>
+            </div>
+            <span class="rounded-full border px-4 py-1.5 text-xs font-semibold ${meta.classes}">${meta.label}</span>
+          </div>
+          <dl class="mt-4 space-y-2 text-right text-sm text-slate-300">
+            <div><dt class="inline font-semibold text-slate-200">مۆبایل: </dt><dd class="inline"><a class="hover:text-sky-300 hover:underline" dir="ltr" href="tel:${escapeHtml(data.phone || '')}">${escapeHtml(data.phone || '-')}</a></dd></div>
+            <div><dt class="inline font-semibold text-slate-200">خزمەتگوزاری: </dt><dd class="inline [unicode-bidi:plaintext]">${escapeHtml(data.service || '-')}</dd></div>
+            ${data.message ? `<div><dt class="block font-semibold text-slate-200">پەیام:</dt><dd class="mt-1 block leading-7 [unicode-bidi:plaintext]">${escapeHtml(data.message)}</dd></div>` : ''}
+          </dl>
+          <div class="mt-5 flex flex-wrap items-center justify-start gap-2">
+            <button data-status="new" class="status-btn rounded-full border px-4 py-2 text-xs font-semibold transition ${data.status === 'new' ? statusMeta.new.classes : 'border-white/20 bg-white/10 text-slate-100 hover:bg-white/20'}">تازە</button>
+            <button data-status="in_progress" class="status-btn rounded-full border px-4 py-2 text-xs font-semibold transition ${data.status === 'in_progress' ? statusMeta.in_progress.classes : 'border-white/20 bg-white/10 text-slate-100 hover:bg-white/20'}">لە کارەکردنیدا</button>
+            <button data-status="done" class="status-btn rounded-full border px-4 py-2 text-xs font-semibold transition ${data.status === 'done' ? statusMeta.done.classes : 'border-white/20 bg-white/10 text-slate-100 hover:bg-white/20'}">تەواوبووە</button>
+          </div>
+        `;
+
+        card.querySelectorAll('.status-btn').forEach((btn) => {
+          btn.addEventListener('click', async () => {
+            try {
+              await updateDoc(doc(db, 'requests', id), { status: btn.dataset.status });
+            } catch (err) {
+              console.error(err);
+            }
+          });
+        });
+
+        return card;
+      }
+
+      function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str ?? '';
+        return div.innerHTML;
+      }
+    </script>
+  </body>
+</html>
