@@ -22,20 +22,46 @@
     <div class="relative overflow-hidden">
       <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.18),_transparent_45%),radial-gradient(circle_at_85%_80%,_rgba(139,92,246,0.16),_transparent_35%)]"></div>
 
+      <!-- UPDATED RESPONSIVE HEADER -->
       <header class="relative border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
-        <div class="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-5">
-
+        <div class="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between px-6 py-5">
           <!-- Original Text Logo -->
           <a href="index.html" class="flex-shrink-0 text-xl font-semibold tracking-tight text-white">The CV Duo</a>
 
-          <nav class="flex flex-wrap items-center gap-2 text-sm font-semibold">
-            <a href="index.html" class="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-slate-100 transition hover:bg-white/20">پەڕەی سەرەتا</a>
-            <a href="services.html" aria-current="page" class="rounded-full border border-sky-400/50 bg-sky-500/10 px-4 py-2 text-sky-200 transition hover:bg-sky-500/20">نرخ و خزمەتگوزارییەکان</a>
-            <a href="portfolio.html" class="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-slate-100 transition hover:bg-white/20">نموونەی کارەکانمان</a>
-            <a href="order.html" class="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-slate-100 transition hover:bg-white/20">داواکردنی خزمەتگوزاری</a>
+          <!-- Mobile Menu Button (Hamburger icon) -->
+          <button id="mobile-menu-button" class="block text-slate-300 hover:text-white md:hidden">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path id="menu-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+
+          <!-- Navigation Links (Collapsible on mobile) -->
+          <nav id="site-nav" class="hidden w-full flex-col gap-2 pt-4 text-sm font-semibold md:flex md:w-auto md:flex-row md:items-center md:gap-3 md:pt-0">
+            <a href="index.html" class="w-full rounded-full bg-transparent px-4 py-2 text-center text-slate-300 transition-colors hover:bg-white/5 hover:text-white md:w-auto">پەڕەی سەرەتا</a>
+            <!-- Active Page Highlight applied here -->
+            <a href="services.html" class="w-full rounded-full bg-sky-500/10 px-4 py-2 text-center text-sky-400 md:w-auto">نرخ و خزمەتگوزارییەکان</a>
+            <a href="portfolio.html" class="w-full rounded-full bg-transparent px-4 py-2 text-center text-slate-300 transition-colors hover:bg-white/5 hover:text-white md:w-auto">نموونەی کارەکانمان</a>
+            <a href="order.html" class="w-full rounded-full bg-transparent px-4 py-2 text-center text-slate-300 transition-colors hover:bg-white/5 hover:text-white md:w-auto">داواکردنی خزمەتگوزاری</a>
           </nav>
         </div>
       </header>
+
+      <!-- Script to handle menu toggle logic -->
+      <script>
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+          var nav = document.getElementById('site-nav');
+          var icon = document.getElementById('menu-icon-path');
+          // Toggle navigation visibility
+          nav.classList.toggle('hidden');
+          nav.classList.toggle('flex');
+          // Toggle icon between hamburger (≡) and close (X)
+          if (nav.classList.contains('hidden')) {
+            icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16'); // Hamburger
+          } else {
+            icon.setAttribute('d', 'M6 18L18 6M6 6l12 12'); // Close X
+          }
+        });
+      </script>
 
       <main class="relative mx-auto w-full max-w-6xl px-6 pb-24 pt-20 md:pt-24">
         <h1 class="mb-8 text-right text-3xl font-bold text-white md:text-4xl">نرخ و خزمەتگوزارییەکان</h1>
@@ -115,7 +141,7 @@
           </p>
           <div class="mt-8 flex flex-wrap items-center justify-start gap-4">
             <a href="https://www.instagram.com/thecvduo" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-full border border-pink-400/40 bg-pink-500/10 px-5 py-3 text-sm font-semibold text-pink-200 transition hover:bg-pink-500/20">https://www.instagram.com/thecvduo</a>
-            <a href="https://www.facebook.com/profile.php?id=61590650692607" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-full border border-blue-400/40 bg-blue-500/10 px-5 py-3 text-sm font-semibold text-blue-200 transition hover:bg-blue-500/20">https://www.facebook.com/profile.php?id=61590650692607</a>
+            <a href="https://www.facebook.com/profile.php?id=61590650692607" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-full border border-blue-400/40 bg-blue-500/10 px-5 py-3 text-sm font-semibold text-blue- blue-200 transition hover:bg-blue-500/20">https://www.facebook.com/profile.php?id=61590650692607</a>
           </div>
           <div class="mt-10 border-t border-white/10 pt-6 text-right text-sm text-slate-400">
             <a href="mailto:thecvduo.1@gmail.com" class="font-medium text-slate-200 transition hover:text-sky-300 hover:underline">thecvduo.1@gmail.com</a>
