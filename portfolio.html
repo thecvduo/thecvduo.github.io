@@ -4,34 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The CV Duo | نموونەی کارەکانمان</title>
-
-    <meta name="description" content="نموونەی کارەکانی The CV Duo: نموونەی سیڤی پیشەیی و دیزاینی وەسڵ کە بۆ کڕیارانمان ئامادەکراوە." />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="نموونەی کارەکانمان | The CV Duo" />
-    <meta property="og:description" content="نموونەی سیڤی و وەسڵی پیشەیی کە لەلایەن The CV Duo دیزاین کراوە." />
-    <meta property="og:image" content="og-image.jpg" />
-    <meta property="og:url" content="https://thecvduo.github.io/portfolio.html" />
-    <meta property="og:locale" content="ckb" />
-
-    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
     <div class="relative overflow-hidden">
       <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.18),_transparent_45%),radial-gradient(circle_at_85%_80%,_rgba(139,92,246,0.16),_transparent_35%)]"></div>
-
       <header class="relative border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
+        <style>
+          @media (min-width: 768px) {
+            #mobile-menu-button { display: none !important; }
+            #site-nav { display: flex !important; flex-direction: row !important; width: auto !important; padding-top: 0 !important; }
+          }
+        </style>
         <div class="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between px-6 py-5">
           <a href="index.html" class="flex-shrink-0 text-xl font-semibold tracking-tight text-white">The CV Duo</a>
-
-          <button id="mobile-menu-button" class="block text-slate-300 hover:text-white md:hidden">
+          <button id="mobile-menu-button" class="block text-slate-300 hover:text-white">
             <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path id="menu-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
           </button>
-
-          <nav id="site-nav" class="hidden w-full flex-col gap-2 pt-4 text-sm font-semibold md:flex md:w-auto md:flex-row md:items-center md:gap-3 md:pt-0">
+          <nav id="site-nav" class="hidden w-full flex-col gap-2 pt-4 text-sm font-semibold">
             <a href="index.html" class="w-full rounded-full bg-transparent px-4 py-2 text-center text-slate-300 transition-colors hover:bg-white/5 hover:text-white md:w-auto">پەڕەی سەرەتا</a>
             <a href="services.html" class="w-full rounded-full bg-transparent px-4 py-2 text-center text-slate-300 transition-colors hover:bg-white/5 hover:text-white md:w-auto">نرخ و خزمەتگوزارییەکان</a>
             <a href="portfolio.html" aria-current="page" class="w-full rounded-full bg-sky-500/10 px-4 py-2 text-center text-sky-400 md:w-auto">نموونەی کارەکانمان</a>
@@ -39,85 +31,14 @@
           </nav>
         </div>
       </header>
-
       <script>
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
           var nav = document.getElementById('site-nav');
           var icon = document.getElementById('menu-icon-path');
-          // Toggle navigation visibility
-          nav.classList.toggle('hidden');
-          nav.classList.toggle('flex');
-          // Toggle icon between hamburger (≡) and close (X)
-          if (nav.classList.contains('hidden')) {
-            icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16'); // Hamburger
-          } else {
-            icon.setAttribute('d', 'M6 18L18 6M6 6l12 12'); // Close X
-          }
+          nav.classList.toggle('hidden'); nav.classList.toggle('flex');
+          icon.setAttribute('d', nav.classList.contains('hidden') ? 'M4 6h16M4 12h16M4 18h16' : 'M6 18L18 6M6 6l12 12');
         });
       </script>
-
-      <main class="relative mx-auto w-full max-w-6xl px-6 pb-24 pt-20 md:pt-24">
-
-        <h1 class="mb-8 text-right text-3xl font-bold text-white md:text-4xl">نموونەی سیڤییەکان (CV)</h1>
-        <div class="mb-12 text-right">
-          <p class="text-lg text-slate-300 leading-relaxed mb-4 [unicode-bidi:plaintext]">
-            لێرەدا دەتوانیت چەند نموونەیەکی کارەکانی پێشوومان ببینی. سیڤییەکی بەهێز یەکەم هەنگاوە بۆ بەدەستهێنانی کارەکەت. ئێمە کارەکانمان لەسەر ئەم خاڵانە بونیاد دەنێین:
-          </p>
-          <ul class="list-disc list-inside text-slate-400 space-y-2 text-md [unicode-bidi:plaintext]">
-            <li>دیزاینی مۆدێرن و سەرنجڕاکێش بۆ خاوەنکار.</li>
-            <li>ڕێکخستنی زانیارییەکانت بە شێوەیەکی زۆر ڕوون و ئاسان بۆ خوێندنەوە.</li>
-            <li>گونجاندنی دیزاینەکە لەگەڵ جۆری پیشەکەت (پزیشک، ئەندازیار، مامۆستا، هتد...).</li>
-          </ul>
-        </div>
-
-        <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-          <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl transition hover:-translate-y-2 hover:shadow-sky-500/20">
-            <img src="cv1.jpg" alt="نموونەی سیڤی ١" width="600" height="850" loading="lazy" class="h-auto w-full object-cover">
-          </div>
-          <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl transition hover:-translate-y-2 hover:shadow-sky-500/20">
-            <img src="cv2.jpg" alt="نموونەی سیڤی ٢" width="600" height="850" loading="lazy" class="h-auto w-full object-cover">
-          </div>
-          <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl transition hover:-translate-y-2 hover:shadow-sky-500/20">
-            <img src="cv3.jpg" alt="نموونەی سیڤی ٣" width="600" height="850" loading="lazy" class="h-auto w-full object-cover">
-          </div>
-        </div>
-
-        <h2 class="mb-8 mt-24 text-right text-3xl font-bold text-white md:text-4xl">دیزاینی وەسڵ (Invoice)</h2>
-        <div class="mb-12 text-right">
-          <p class="text-lg text-slate-300 leading-relaxed mb-4 [unicode-bidi:plaintext]">
-            وەسڵێکی پیشەیی و ڕێکوپێک نیشانەی ئاستبەرزی براندەکەتە. ئێمە وەسڵەکان بە گوێرەی ڕەنگ و لۆگۆی تایبەت بە خۆت دیزاین دەکەین بۆ ئەوەی متمانەی زیاتر لای کڕیارەکانت دروست بکەیت.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-          <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl transition hover:-translate-y-2 hover:shadow-sky-500/20">
-            <img src="invoice1.jpg" alt="نموونەی وەسڵ ١" width="600" height="850" loading="lazy" class="h-auto w-full object-cover">
-          </div>
-          <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl transition hover:-translate-y-2 hover:shadow-sky-500/20">
-            <img src="invoice2.jpg" alt="نموونەی وەسڵ ٢" width="600" height="850" loading="lazy" class="h-auto w-full object-cover">
-          </div>
-          <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl transition hover:-translate-y-2 hover:shadow-sky-500/20">
-            <img src="invoice3.jpg" alt="نموونەی وەسڵ ٣" width="600" height="850" loading="lazy" class="h-auto w-full object-cover">
-          </div>
-        </div>
-
-      </main>
-
-      <footer class="relative border-t border-white/10 bg-black/20 mt-12">
-        <div class="mx-auto w-full max-w-6xl px-6 py-14">
-          <h2 class="text-right text-3xl font-bold text-white">پەیجی فەیسبووک و ئینستاگرام</h2>
-          <p class="mt-5 max-w-3xl text-right leading-8 text-slate-300 [unicode-bidi:plaintext]">
-            بۆ وەرگرتنی خزمەتگوزارییەکی پیشەیی و وەڵامی خێرا، لە ڕێگەی ئیمەیڵ یان سۆشیال میدیاکانی خوارەوە پەیوەندیمان پێوە بکەن.
-          </p>
-          <div class="mt-8 flex flex-wrap items-center justify-start gap-4">
-            <a href="https://www.instagram.com/thecvduo" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-full border border-pink-400/40 bg-pink-500/10 px-5 py-3 text-sm font-semibold text-pink-200 transition hover:bg-pink-500/20">https://www.instagram.com/thecvduo</a>
-            <a href="https://www.facebook.com/profile.php?id=61590650692607" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-full border border-blue-400/40 bg-blue-500/10 px-5 py-3 text-sm font-semibold text-blue-200 transition hover:bg-blue-500/20">https://www.facebook.com/profile.php?id=61590650692607</a>
-          </div>
-          <div class="mt-10 border-t border-white/10 pt-6 text-right text-sm text-slate-400">
-            <a href="mailto:thecvduo.1@gmail.com" class="font-medium text-slate-200 transition hover:text-sky-300 hover:underline">thecvduo.1@gmail.com</a>
-          </div>
-        </div>
-      </footer>
-    </div>
+      </div>
   </body>
 </html>
