@@ -37,45 +37,20 @@
     <div class="relative overflow-hidden">
       <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.18),_transparent_45%),radial-gradient(circle_at_85%_80%,_rgba(139,92,246,0.16),_transparent_35%)]"></div>
 
-      <!-- HEADER WITH CSS FIX -->
       <header class="relative border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
-        <style>
-          @media (min-width: 768px) {
-            #mobile-menu-button { display: none !important; }
-            #site-nav { display: flex !important; flex-direction: row !important; width: auto !important; padding-top: 0 !important; }
-          }
-        </style>
-        <div class="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between px-6 py-5">
+        <div class="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-5">
+
+          <!-- Original Text Logo -->
           <a href="index.html" class="flex-shrink-0 text-xl font-semibold tracking-tight text-white">The CV Duo</a>
 
-          <button id="mobile-menu-button" class="block text-slate-300 hover:text-white">
-            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path id="menu-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-          </button>
-
-          <nav id="site-nav" class="hidden w-full flex-col gap-2 pt-4 text-sm font-semibold">
-            <a href="index.html" aria-current="page" class="w-full rounded-full border border-sky-400/50 bg-sky-500/10 px-4 py-2 text-center text-sky-200 transition hover:bg-sky-500/20 md:w-auto">پەڕەی سەرەتا</a>
-            <a href="services.html" class="w-full rounded-full border border-white/20 bg-white/10 px-4 py-2 text-center text-slate-100 transition hover:bg-white/20 md:w-auto">نرخ و خزمەتگوزارییەکان</a>
-            <a href="portfolio.html" class="w-full rounded-full border border-white/20 bg-white/10 px-4 py-2 text-center text-slate-100 transition hover:bg-white/20 md:w-auto">نموونەی کارەکانمان</a>
-            <a href="order.html" class="w-full rounded-full border border-white/20 bg-white/10 px-4 py-2 text-center text-slate-100 transition hover:bg-white/20 md:w-auto">داواکردنی خزمەتگوزاری</a>
+          <nav class="flex flex-wrap items-center gap-2 text-sm font-semibold">
+            <a href="index.html" aria-current="page" class="rounded-full border border-sky-400/50 bg-sky-500/10 px-4 py-2 text-sky-200 transition hover:bg-sky-500/20">پەڕەی سەرەتا</a>
+            <a href="services.html" class="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-slate-100 transition hover:bg-white/20">نرخ و خزمەتگوزارییەکان</a>
+            <a href="portfolio.html" class="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-slate-100 transition hover:bg-white/20">نموونەی کارەکانمان</a>
+            <a href="order.html" class="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-slate-100 transition hover:bg-white/20">داواکردنی خزمەتگوزاری</a>
           </nav>
         </div>
       </header>
-
-      <script>
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-          var nav = document.getElementById('site-nav');
-          var icon = document.getElementById('menu-icon-path');
-          nav.classList.toggle('hidden');
-          nav.classList.toggle('flex');
-          if (nav.classList.contains('hidden')) {
-            icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-          } else {
-            icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-          }
-        });
-      </script>
 
       <main class="relative">
         <section class="mx-auto w-full max-w-6xl px-6 pb-16 pt-20 md:pt-28">
