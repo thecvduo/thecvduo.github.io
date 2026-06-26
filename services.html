@@ -4,17 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The CV Duo | نرخ و خزمەتگوزارییەکان</title>
-
     <meta name="description" content="نرخ و خزمەتگوزارییەکانی The CV Duo: سیڤی، ڕاپۆرت، پڕێزێنتەیشن، وەسڵ و لۆگۆ — لیستی نرخی تەواو بە دیناری عێراقی." />
-
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="نرخ و خزمەتگوزارییەکان | The CV Duo" />
-    <meta property="og:description" content="لیستی تەواوی نرخی سیڤی، ڕاپۆرت، پڕێزێنتەیشن، وەسڵ و لۆگۆی The CV Duo." />
-    <meta property="og:image" content="og-image.jpg" />
-    <meta property="og:url" content="https://thecvduo.github.io/services.html" />
-    <meta property="og:locale" content="ckb" />
-
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -22,132 +12,43 @@
     <div class="relative overflow-hidden">
       <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.18),_transparent_45%),radial-gradient(circle_at_85%_80%,_rgba(139,92,246,0.16),_transparent_35%)]"></div>
 
-      <!-- UPDATED RESPONSIVE HEADER -->
       <header class="relative border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
+        <style>
+          @media (min-width: 768px) {
+            #mobile-menu-button { display: none !important; }
+            #site-nav { display: flex !important; flex-direction: row !important; width: auto !important; padding-top: 0 !important; }
+          }
+        </style>
         <div class="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between px-6 py-5">
-          <!-- Original Text Logo -->
           <a href="index.html" class="flex-shrink-0 text-xl font-semibold tracking-tight text-white">The CV Duo</a>
-
-          <!-- Mobile Menu Button (Hamburger icon) -->
-          <button id="mobile-menu-button" class="block text-slate-300 hover:text-white md:hidden">
+          <button id="mobile-menu-button" class="block text-slate-300 hover:text-white">
             <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path id="menu-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
           </button>
-
-          <!-- Navigation Links (Collapsible on mobile) -->
-          <nav id="site-nav" class="hidden w-full flex-col gap-2 pt-4 text-sm font-semibold md:flex md:w-auto md:flex-row md:items-center md:gap-3 md:pt-0">
+          <nav id="site-nav" class="hidden w-full flex-col gap-2 pt-4 text-sm font-semibold">
             <a href="index.html" class="w-full rounded-full bg-transparent px-4 py-2 text-center text-slate-300 transition-colors hover:bg-white/5 hover:text-white md:w-auto">پەڕەی سەرەتا</a>
-            <!-- Active Page Highlight applied here -->
-            <a href="services.html" class="w-full rounded-full bg-sky-500/10 px-4 py-2 text-center text-sky-400 md:w-auto">نرخ و خزمەتگوزارییەکان</a>
+            <a href="services.html" aria-current="page" class="w-full rounded-full bg-sky-500/10 px-4 py-2 text-center text-sky-400 md:w-auto">نرخ و خزمەتگوزارییەکان</a>
             <a href="portfolio.html" class="w-full rounded-full bg-transparent px-4 py-2 text-center text-slate-300 transition-colors hover:bg-white/5 hover:text-white md:w-auto">نموونەی کارەکانمان</a>
             <a href="order.html" class="w-full rounded-full bg-transparent px-4 py-2 text-center text-slate-300 transition-colors hover:bg-white/5 hover:text-white md:w-auto">داواکردنی خزمەتگوزاری</a>
           </nav>
         </div>
       </header>
 
-      <!-- Script to handle menu toggle logic -->
       <script>
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
           var nav = document.getElementById('site-nav');
           var icon = document.getElementById('menu-icon-path');
-          // Toggle navigation visibility
-          nav.classList.toggle('hidden');
-          nav.classList.toggle('flex');
-          // Toggle icon between hamburger (≡) and close (X)
-          if (nav.classList.contains('hidden')) {
-            icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16'); // Hamburger
-          } else {
-            icon.setAttribute('d', 'M6 18L18 6M6 6l12 12'); // Close X
-          }
+          nav.classList.toggle('hidden'); nav.classList.toggle('flex');
+          icon.setAttribute('d', nav.classList.contains('hidden') ? 'M4 6h16M4 12h16M4 18h16' : 'M6 18L18 6M6 6l12 12');
         });
       </script>
 
       <main class="relative mx-auto w-full max-w-6xl px-6 pb-24 pt-20 md:pt-24">
         <h1 class="mb-8 text-right text-3xl font-bold text-white md:text-4xl">نرخ و خزمەتگوزارییەکان</h1>
         <section class="mb-10 grid gap-6 md:grid-cols-2">
-          <article class="rounded-3xl border border-white/10 bg-white/5 p-7 shadow-xl shadow-black/20 backdrop-blur-sm">
-            <h2 class="text-2xl font-bold text-white md:text-3xl">سیڤی پیشەیی (CV)</h2>
-            <p class="mt-4 text-right leading-8 text-slate-300 [unicode-bidi:plaintext]">
-              دیزاینی سەرنجڕاکێش بۆ تێپەڕاندنی فلتەرەکانی کار و پیشاندانی لێهاتووییەکانت.
-            </p>
-          </article>
-          <article class="rounded-3xl border border-white/10 bg-white/5 p-7 shadow-xl shadow-black/20 backdrop-blur-sm">
-            <h2 class="text-2xl font-bold text-white md:text-3xl">ڕاپۆرت</h2>
-            <p class="mt-4 text-right leading-8 text-slate-300 [unicode-bidi:plaintext]">
-              ئامادەکردنی ڕاپۆرتی ڕوون و ڕێکخراو بۆ کۆمپانیاکان.
-            </p>
-          </article>
-          <article class="rounded-3xl border border-white/10 bg-white/5 p-7 shadow-xl shadow-black/20 backdrop-blur-sm">
-            <h2 class="text-2xl font-bold text-white md:text-3xl">دیزاینی وەسڵ (Invoice)</h2>
-            <p class="mt-4 text-right leading-8 text-slate-300 [unicode-bidi:plaintext]">
-              دروستکردنی فۆرماتی وەسڵی ڕێک و پێک بۆ براندەکەت.
-            </p>
-          </article>
-          <article class="rounded-3xl border border-white/10 bg-white/5 p-7 shadow-xl shadow-black/20 backdrop-blur-sm">
-            <h2 class="text-2xl font-bold text-white md:text-3xl">دیزاینی لۆگۆ (Logo)</h2>
-            <p class="mt-4 text-right leading-8 text-slate-300 [unicode-bidi:plaintext]">
-              دروستکردنی لۆگۆ و ناسنامەی جیاواز بۆ کارەکەت.
-            </p>
-          </article>
-        </section>
-
-        <section class="rounded-3xl border border-white/10 bg-slate-900/70 p-6 shadow-xl shadow-black/20 md:p-8">
-          <h2 class="mb-6 text-right text-2xl font-bold text-white md:text-3xl">لیستی نرخەکان (د.ع)</h2>
-          <div class="overflow-x-auto">
-            <table class="min-w-full overflow-hidden rounded-2xl border border-white/10 text-right">
-              <thead class="bg-white/10 text-slate-100">
-                <tr>
-                  <th class="px-5 py-4 text-sm font-semibold">خزمەتگوزاری</th>
-                  <th class="px-5 py-4 text-sm font-semibold">نرخ</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-white/10 bg-slate-950/60 text-slate-200">
-                <tr class="hover:bg-white/5">
-                  <td class="px-5 py-4">سیڤی (CV)</td>
-                  <td class="px-5 py-4 font-semibold">٥,٠٠٠ دینار</td>
-                </tr>
-                <tr class="hover:bg-white/5">
-                  <td class="px-5 py-4">پڕێزێنتەیشنی ئاسایی (Normal Presentation)</td>
-                  <td class="px-5 py-4 font-semibold">٥,٠٠٠ دینار</td>
-                </tr>
-                <tr class="hover:bg-white/5">
-                  <td class="px-5 py-4">پڕێزێنتەیشنی سێ ڕەهەندی (3D Presentation)</td>
-                  <td class="px-5 py-4 font-semibold">١٠,٠٠٠ دینار</td>
-                </tr>
-                <tr class="hover:bg-white/5">
-                  <td class="px-5 py-4">وەسڵ (Invoice)</td>
-                  <td class="px-5 py-4 font-semibold">٥,٠٠٠ دینار</td>
-                </tr>
-                <tr class="hover:bg-white/5">
-                  <td class="px-5 py-4">ڕاپۆرت (Report)</td>
-                  <td class="px-5 py-4 font-semibold">بەپێی جۆری کارەکە دەگۆڕێت (Depends)</td>
-                </tr>
-                <tr class="hover:bg-white/5">
-                  <td class="px-5 py-4">لۆگۆ (Logo)</td>
-                  <td class="px-5 py-4 font-semibold">بەپێی جۆری کارەکە دەگۆڕێت (Depends)</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
+            </section>
       </main>
-
-      <footer class="relative border-t border-white/10 bg-black/20">
-        <div class="mx-auto w-full max-w-6xl px-6 py-14">
-          <h2 class="text-right text-3xl font-bold text-white">پەیجی فەیسبووک و ئینستاگرام</h2>
-          <p class="mt-5 max-w-3xl text-right leading-8 text-slate-300 [unicode-bidi:plaintext]">
-            بۆ وەرگرتنی خزمەتگوزارییەکی پیشەیی و وەڵامی خێرا، لە ڕێگەی ئیمەیڵ یان سۆشیال میدیاکانی خوارەوە پەیوەندیمان پێوە بکەن.
-          </p>
-          <div class="mt-8 flex flex-wrap items-center justify-start gap-4">
-            <a href="https://www.instagram.com/thecvduo" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-full border border-pink-400/40 bg-pink-500/10 px-5 py-3 text-sm font-semibold text-pink-200 transition hover:bg-pink-500/20">https://www.instagram.com/thecvduo</a>
-            <a href="https://www.facebook.com/profile.php?id=61590650692607" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-full border border-blue-400/40 bg-blue-500/10 px-5 py-3 text-sm font-semibold text-blue- blue-200 transition hover:bg-blue-500/20">https://www.facebook.com/profile.php?id=61590650692607</a>
-          </div>
-          <div class="mt-10 border-t border-white/10 pt-6 text-right text-sm text-slate-400">
-            <a href="mailto:thecvduo.1@gmail.com" class="font-medium text-slate-200 transition hover:text-sky-300 hover:underline">thecvduo.1@gmail.com</a>
-          </div>
-        </div>
-      </footer>
     </div>
   </body>
 </html>
