@@ -19,7 +19,7 @@
         </div>
       </header>
 
-      <main class="relative mx-auto w-full max-w-4xl px-6 pb-24 pt-16 md:pt-20">
+      <main class="relative mx-auto w-full max-w-5xl px-6 pb-24 pt-16 md:pt-20">
 
         <!-- LOGIN -->
         <section id="login-section" class="mx-auto max-w-md">
@@ -42,13 +42,57 @@
 
         <!-- DASHBOARD -->
         <section id="dashboard-section" class="hidden">
-          <div class="mb-8 flex flex-wrap items-center justify-between gap-4">
-            <h1 class="text-right text-3xl font-bold text-white">داواکارییەکان</h1>
-            <span id="count-badge" class="rounded-full border border-sky-400/40 bg-sky-500/10 px-4 py-1.5 text-sm font-semibold text-sky-200"></span>
+
+          <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+            <h1 class="text-right text-3xl font-bold text-white">داشبۆردی داواکارییەکان</h1>
+            <span class="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-300">
+              <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+              ڕاستەوخۆ
+            </span>
+          </div>
+
+          <!-- Stat cards -->
+          <div class="mb-4 grid grid-cols-2 gap-3 md:grid-cols-4">
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-right">
+              <p class="text-xs text-slate-400">کۆی گشتی</p>
+              <p id="stat-total" class="mt-1 text-2xl font-bold text-white">٠</p>
+            </div>
+            <div class="rounded-2xl border border-sky-400/30 bg-sky-500/10 p-4 text-right">
+              <p class="text-xs text-sky-300">تازە</p>
+              <p id="stat-new" class="mt-1 text-2xl font-bold text-sky-200">٠</p>
+            </div>
+            <div class="rounded-2xl border border-amber-400/30 bg-amber-500/10 p-4 text-right">
+              <p class="text-xs text-amber-300">لە کارەکردنیدا</p>
+              <p id="stat-progress" class="mt-1 text-2xl font-bold text-amber-200">٠</p>
+            </div>
+            <div class="rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-4 text-right">
+              <p class="text-xs text-emerald-300">تەواوبووە</p>
+              <p id="stat-done" class="mt-1 text-2xl font-bold text-emerald-200">٠</p>
+            </div>
+          </div>
+
+          <div class="mb-8 rounded-2xl border border-violet-400/30 bg-violet-500/10 px-5 py-4 text-right">
+            <p class="text-xs text-violet-300">نرخی پێشبینیکراوی کاری چاوەڕوان (تازە + لە کارەکردنیدا)</p>
+            <p id="stat-pipeline" class="mt-1 text-xl font-bold text-violet-200">٠ دینار</p>
+          </div>
+
+          <!-- Filters + search -->
+          <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <div id="filter-tabs" class="flex flex-wrap gap-2">
+              <button data-filter="all" class="filter-btn rounded-full border px-4 py-2 text-xs font-semibold transition">هەموو</button>
+              <button data-filter="new" class="filter-btn rounded-full border px-4 py-2 text-xs font-semibold transition">تازە</button>
+              <button data-filter="in_progress" class="filter-btn rounded-full border px-4 py-2 text-xs font-semibold transition">لە کارەکردنیدا</button>
+              <button data-filter="done" class="filter-btn rounded-full border px-4 py-2 text-xs font-semibold transition">تەواوبووە</button>
+            </div>
+            <input id="search-input" type="text" placeholder="گەڕان بە ناو یان مۆبایل..." dir="rtl"
+              class="w-full max-w-xs rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-slate-100 placeholder:text-slate-500 [unicode-bidi:plaintext] focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/30" />
           </div>
 
           <p id="empty-state" class="hidden rounded-3xl border border-white/10 bg-white/5 p-10 text-center text-slate-400">
             هیچ داواکارییەک نییە تا ئێستا.
+          </p>
+          <p id="no-match-state" class="hidden rounded-3xl border border-white/10 bg-white/5 p-10 text-center text-slate-400">
+            هیچ داواکارییەک لەگەڵ ئەم گەڕانە نییە.
           </p>
 
           <div id="requests-list" class="space-y-5"></div>
@@ -73,15 +117,40 @@
       const logoutBtn = document.getElementById('logout-btn');
       const requestsList = document.getElementById('requests-list');
       const emptyState = document.getElementById('empty-state');
-      const countBadge = document.getElementById('count-badge');
+      const noMatchState = document.getElementById('no-match-state');
+      const searchInput = document.getElementById('search-input');
+      const filterBtns = Array.from(document.querySelectorAll('.filter-btn'));
+
+      const statTotal = document.getElementById('stat-total');
+      const statNew = document.getElementById('stat-new');
+      const statProgress = document.getElementById('stat-progress');
+      const statDone = document.getElementById('stat-done');
+      const statPipeline = document.getElementById('stat-pipeline');
 
       let unsubscribeRequests = null;
+      let allDocs = [];
+      let currentFilter = 'all';
 
       const statusMeta = {
-        new: { label: 'تازە', classes: 'border-sky-400/40 bg-sky-500/10 text-sky-200' },
-        in_progress: { label: 'لە کارەکردنیدا', classes: 'border-amber-400/40 bg-amber-500/10 text-amber-200' },
-        done: { label: 'تەواوبووە', classes: 'border-emerald-400/40 bg-emerald-500/10 text-emerald-200' }
+        new: { label: 'تازە', activeClasses: 'border-sky-400/60 bg-sky-500/20 text-sky-200', badgeClasses: 'border-sky-400/40 bg-sky-500/10 text-sky-200' },
+        in_progress: { label: 'لە کارەکردنیدا', activeClasses: 'border-amber-400/60 bg-amber-500/20 text-amber-200', badgeClasses: 'border-amber-400/40 bg-amber-500/10 text-amber-200' },
+        done: { label: 'تەواوبووە', activeClasses: 'border-emerald-400/60 bg-emerald-500/20 text-emerald-200', badgeClasses: 'border-emerald-400/40 bg-emerald-500/10 text-emerald-200' }
       };
+
+      const inactiveBtnClasses = 'border-white/20 bg-white/10 text-slate-100 hover:bg-white/20';
+
+      function toArabicDigits(n) {
+        const arabic = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+        return Math.round(n).toLocaleString('en-US').replace(/[0-9]/g, (d) => arabic[d]);
+      }
+
+      function normalizeForWhatsapp(phone) {
+        let digits = (phone || '').replace(/\D/g, '');
+        if (digits.startsWith('00964')) digits = digits.slice(2);
+        if (digits.startsWith('0')) digits = '964' + digits.slice(1);
+        if (!digits.startsWith('964')) digits = '964' + digits;
+        return digits;
+      }
 
       loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -112,29 +181,99 @@
         }
       });
 
+      filterBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          currentFilter = btn.dataset.filter;
+          renderFilteredList();
+        });
+      });
+
+      searchInput.addEventListener('input', renderFilteredList);
+
+      function updateFilterButtonStyles() {
+        filterBtns.forEach((btn) => {
+          const isActive = btn.dataset.filter === currentFilter;
+          btn.className = 'filter-btn rounded-full border px-4 py-2 text-xs font-semibold transition ' +
+            (isActive ? 'border-sky-400/60 bg-sky-500/20 text-sky-200' : inactiveBtnClasses);
+        });
+      }
+
       function startListening() {
         const q = query(collection(db, 'requests'), orderBy('createdAt', 'desc'));
         unsubscribeRequests = onSnapshot(q, (snapshot) => {
-          requestsList.innerHTML = '';
-          countBadge.textContent = snapshot.size + ' داواکاری';
-
-          if (snapshot.empty) {
-            emptyState.classList.remove('hidden');
-            return;
-          }
-          emptyState.classList.add('hidden');
-
-          snapshot.forEach((docSnap) => {
-            requestsList.appendChild(renderCard(docSnap.id, docSnap.data()));
-          });
+          allDocs = snapshot.docs.map((d) => ({ id: d.id, data: d.data() }));
+          updateStats();
+          renderFilteredList();
         }, (err) => {
           console.error(err);
         });
       }
 
+      function updateStats() {
+        let countNew = 0, countProgress = 0, countDone = 0, pipeline = 0;
+        allDocs.forEach(({ data }) => {
+          const status = data.status || 'new';
+          if (status === 'new') { countNew++; pipeline += Number(data.estimatedTotal || 0); }
+          else if (status === 'in_progress') { countProgress++; pipeline += Number(data.estimatedTotal || 0); }
+          else if (status === 'done') { countDone++; }
+        });
+        statTotal.textContent = toArabicDigits(allDocs.length);
+        statNew.textContent = toArabicDigits(countNew);
+        statProgress.textContent = toArabicDigits(countProgress);
+        statDone.textContent = toArabicDigits(countDone);
+        statPipeline.textContent = toArabicDigits(pipeline) + ' دینار';
+      }
+
+      function renderFilteredList() {
+        updateFilterButtonStyles();
+        const searchTerm = searchInput.value.trim().toLowerCase();
+
+        const filtered = allDocs.filter(({ data }) => {
+          const status = data.status || 'new';
+          if (currentFilter !== 'all' && status !== currentFilter) return false;
+          if (searchTerm) {
+            const haystack = ((data.name || '') + ' ' + (data.phone || '')).toLowerCase();
+            if (!haystack.includes(searchTerm)) return false;
+          }
+          return true;
+        });
+
+        requestsList.innerHTML = '';
+
+        if (allDocs.length === 0) {
+          emptyState.classList.remove('hidden');
+          noMatchState.classList.add('hidden');
+          return;
+        }
+        emptyState.classList.add('hidden');
+
+        if (filtered.length === 0) {
+          noMatchState.classList.remove('hidden');
+          return;
+        }
+        noMatchState.classList.add('hidden');
+
+        filtered.forEach(({ id, data }) => {
+          requestsList.appendChild(renderCard(id, data));
+        });
+      }
+
       function renderCard(id, data) {
-        const meta = statusMeta[data.status] || statusMeta.new;
+        const status = data.status || 'new';
+        const meta = statusMeta[status] || statusMeta.new;
         const date = data.createdAt ? data.createdAt.toDate().toLocaleString('ckb') : '';
+
+        const services = Array.isArray(data.services) ? data.services : (data.service ? [data.service] : []);
+        const servicesBadges = services.map((s) =>
+          `<span class="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs text-slate-200 [unicode-bidi:plaintext]">${escapeHtml(s)}</span>`
+        ).join('');
+
+        const hasTotal = typeof data.estimatedTotal === 'number';
+        const priceLine = hasTotal
+          ? `${toArabicDigits(data.estimatedTotal)} دینار${data.hasVariablePricing ? ' (+ بەشێک بەپێی کارەکە)' : ''}`
+          : '-';
+
+        const waNumber = normalizeForWhatsapp(data.phone);
 
         const card = document.createElement('article');
         card.className = 'rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl shadow-black/20 backdrop-blur-sm';
@@ -144,17 +283,30 @@
               <h3 class="text-xl font-bold text-white [unicode-bidi:plaintext]">${escapeHtml(data.name || '-')}</h3>
               <p class="mt-1 text-sm text-slate-400">${escapeHtml(date)}</p>
             </div>
-            <span class="rounded-full border px-4 py-1.5 text-xs font-semibold ${meta.classes}">${meta.label}</span>
+            <span class="rounded-full border px-4 py-1.5 text-xs font-semibold ${meta.badgeClasses}">${meta.label}</span>
           </div>
+
+          <div class="mt-4 flex flex-wrap items-center justify-end gap-2">
+            ${servicesBadges || '<span class="text-sm text-slate-400">-</span>'}
+          </div>
+
           <dl class="mt-4 space-y-2 text-right text-sm text-slate-300">
-            <div><dt class="inline font-semibold text-slate-200">مۆبایل: </dt><dd class="inline"><a class="hover:text-sky-300 hover:underline" dir="ltr" href="tel:${escapeHtml(data.phone || '')}">${escapeHtml(data.phone || '-')}</a></dd></div>
-            <div><dt class="inline font-semibold text-slate-200">خزمەتگوزاری: </dt><dd class="inline [unicode-bidi:plaintext]">${escapeHtml(data.service || '-')}</dd></div>
+            <div class="flex flex-wrap items-center justify-end gap-2">
+              <dt class="font-semibold text-slate-200">مۆبایل:</dt>
+              <dd class="flex items-center gap-2" dir="ltr">
+                <a class="hover:text-sky-300 hover:underline" href="tel:${escapeHtml(data.phone || '')}">${escapeHtml(data.phone || '-')}</a>
+                <button type="button" class="copy-btn rounded-full border border-white/15 bg-white/10 px-2 py-0.5 text-[11px] text-slate-300 transition hover:bg-white/20" data-phone="${escapeHtml(data.phone || '')}">کۆپی</button>
+                <a href="https://wa.me/${waNumber}" target="_blank" rel="noopener noreferrer" class="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2 py-0.5 text-[11px] text-emerald-300 transition hover:bg-emerald-500/20">واتساپ</a>
+              </dd>
+            </div>
+            <div><dt class="inline font-semibold text-slate-200">نرخی پێشبینیکراو: </dt><dd class="inline [unicode-bidi:plaintext]">${priceLine}</dd></div>
             ${data.message ? `<div><dt class="block font-semibold text-slate-200">پەیام:</dt><dd class="mt-1 block leading-7 [unicode-bidi:plaintext]">${escapeHtml(data.message)}</dd></div>` : ''}
           </dl>
+
           <div class="mt-5 flex flex-wrap items-center justify-start gap-2">
-            <button data-status="new" class="status-btn rounded-full border px-4 py-2 text-xs font-semibold transition ${data.status === 'new' ? statusMeta.new.classes : 'border-white/20 bg-white/10 text-slate-100 hover:bg-white/20'}">تازە</button>
-            <button data-status="in_progress" class="status-btn rounded-full border px-4 py-2 text-xs font-semibold transition ${data.status === 'in_progress' ? statusMeta.in_progress.classes : 'border-white/20 bg-white/10 text-slate-100 hover:bg-white/20'}">لە کارەکردنیدا</button>
-            <button data-status="done" class="status-btn rounded-full border px-4 py-2 text-xs font-semibold transition ${data.status === 'done' ? statusMeta.done.classes : 'border-white/20 bg-white/10 text-slate-100 hover:bg-white/20'}">تەواوبووە</button>
+            <button data-status="new" class="status-btn rounded-full border px-4 py-2 text-xs font-semibold transition ${status === 'new' ? statusMeta.new.activeClasses : inactiveBtnClasses}">تازە</button>
+            <button data-status="in_progress" class="status-btn rounded-full border px-4 py-2 text-xs font-semibold transition ${status === 'in_progress' ? statusMeta.in_progress.activeClasses : inactiveBtnClasses}">لە کارەکردنیدا</button>
+            <button data-status="done" class="status-btn rounded-full border px-4 py-2 text-xs font-semibold transition ${status === 'done' ? statusMeta.done.activeClasses : inactiveBtnClasses}">تەواوبووە</button>
           </div>
         `;
 
@@ -168,6 +320,20 @@
           });
         });
 
+        const copyBtn = card.querySelector('.copy-btn');
+        if (copyBtn) {
+          copyBtn.addEventListener('click', async () => {
+            try {
+              await navigator.clipboard.writeText(copyBtn.dataset.phone);
+              const original = copyBtn.textContent;
+              copyBtn.textContent = 'کۆپیکرا!';
+              setTimeout(() => { copyBtn.textContent = original; }, 1500);
+            } catch (err) {
+              console.error(err);
+            }
+          });
+        }
+
         return card;
       }
 
@@ -176,6 +342,8 @@
         div.textContent = str ?? '';
         return div.innerHTML;
       }
+
+      updateFilterButtonStyles();
     </script>
   </body>
 </html>

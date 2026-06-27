@@ -76,18 +76,74 @@
           </div>
 
           <div>
-            <label for="service" class="mb-2 block text-right text-sm font-semibold text-slate-200">خزمەتگوزاری پێویست</label>
-            <select id="service" name="service" required
-              class="w-full rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-right text-slate-100 [unicode-bidi:plaintext] focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/30">
-              <option value="" disabled selected>هەڵبژاردن بکە...</option>
-              <option value="سیڤی (CV)">سیڤی (CV)</option>
-              <option value="ڕاپۆرت (Report)">ڕاپۆرت (Report)</option>
-              <option value="پڕێزێنتەیشنی ئاسایی">پڕێزێنتەیشنی ئاسایی (Normal Presentation)</option>
-              <option value="پڕێزێنتەیشنی سێ ڕەهەندی">پڕێزێنتەیشنی سێ ڕەهەندی (3D Presentation)</option>
-              <option value="وەسڵ (Invoice)">وەسڵ (Invoice)</option>
-              <option value="لۆگۆ (Logo)">لۆگۆ (Logo)</option>
-              <option value="شتێکی دیکە">شتێکی دیکە (Other)</option>
-            </select>
+            <label class="mb-2 block text-right text-sm font-semibold text-slate-200">کام خزمەتگوزارییەکانت پێویستە؟</label>
+            <p class="mb-3 text-right text-xs text-slate-400 [unicode-bidi:plaintext]">دەتوانیت چەند بژاردەیەک هەڵبژێریت (بۆ نموونە: سیڤی + لۆگۆ)</p>
+
+            <div id="service-options" class="space-y-2.5">
+              <label class="flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-white/15 bg-white/5 px-4 py-3 transition hover:border-sky-400/40 hover:bg-white/10">
+                <input type="checkbox" name="services" value="سیڤی (CV)" data-price="5000" class="h-5 w-5 rounded-md border-white/30 bg-white/10 text-sky-500 focus:ring-2 focus:ring-sky-400/40" />
+                <span class="flex flex-1 items-center justify-between gap-3 text-right [unicode-bidi:plaintext]">
+                  <span class="font-medium text-slate-100">سیڤی (CV)</span>
+                  <span class="text-xs text-slate-400">٥,٠٠٠ د.ع</span>
+                </span>
+              </label>
+
+              <label class="flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-white/15 bg-white/5 px-4 py-3 transition hover:border-sky-400/40 hover:bg-white/10">
+                <input type="checkbox" name="services" value="ڕاپۆرت (Report)" data-price="0" data-depends="true" class="h-5 w-5 rounded-md border-white/30 bg-white/10 text-sky-500 focus:ring-2 focus:ring-sky-400/40" />
+                <span class="flex flex-1 items-center justify-between gap-3 text-right [unicode-bidi:plaintext]">
+                  <span class="font-medium text-slate-100">ڕاپۆرت (Report)</span>
+                  <span class="text-xs text-slate-400">بەپێی کارەکە (Depends)</span>
+                </span>
+              </label>
+
+              <label class="flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-white/15 bg-white/5 px-4 py-3 transition hover:border-sky-400/40 hover:bg-white/10">
+                <input type="checkbox" name="services" value="پڕێزێنتەیشنی ئاسایی" data-price="5000" class="h-5 w-5 rounded-md border-white/30 bg-white/10 text-sky-500 focus:ring-2 focus:ring-sky-400/40" />
+                <span class="flex flex-1 items-center justify-between gap-3 text-right [unicode-bidi:plaintext]">
+                  <span class="font-medium text-slate-100">پڕێزێنتەیشنی ئاسایی (Normal)</span>
+                  <span class="text-xs text-slate-400">٥,٠٠٠ د.ع</span>
+                </span>
+              </label>
+
+              <label class="flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-white/15 bg-white/5 px-4 py-3 transition hover:border-sky-400/40 hover:bg-white/10">
+                <input type="checkbox" name="services" value="پڕێزێنتەیشنی سێ ڕەهەندی" data-price="10000" class="h-5 w-5 rounded-md border-white/30 bg-white/10 text-sky-500 focus:ring-2 focus:ring-sky-400/40" />
+                <span class="flex flex-1 items-center justify-between gap-3 text-right [unicode-bidi:plaintext]">
+                  <span class="font-medium text-slate-100">پڕێزێنتەیشنی سێ ڕەهەندی (3D)</span>
+                  <span class="text-xs text-slate-400">١٠,٠٠٠ د.ع</span>
+                </span>
+              </label>
+
+              <label class="flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-white/15 bg-white/5 px-4 py-3 transition hover:border-sky-400/40 hover:bg-white/10">
+                <input type="checkbox" name="services" value="وەسڵ (Invoice)" data-price="5000" class="h-5 w-5 rounded-md border-white/30 bg-white/10 text-sky-500 focus:ring-2 focus:ring-sky-400/40" />
+                <span class="flex flex-1 items-center justify-between gap-3 text-right [unicode-bidi:plaintext]">
+                  <span class="font-medium text-slate-100">وەسڵ (Invoice)</span>
+                  <span class="text-xs text-slate-400">٥,٠٠٠ د.ع</span>
+                </span>
+              </label>
+
+              <label class="flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-white/15 bg-white/5 px-4 py-3 transition hover:border-sky-400/40 hover:bg-white/10">
+                <input type="checkbox" name="services" value="لۆگۆ (Logo)" data-price="0" data-depends="true" class="h-5 w-5 rounded-md border-white/30 bg-white/10 text-sky-500 focus:ring-2 focus:ring-sky-400/40" />
+                <span class="flex flex-1 items-center justify-between gap-3 text-right [unicode-bidi:plaintext]">
+                  <span class="font-medium text-slate-100">لۆگۆ (Logo)</span>
+                  <span class="text-xs text-slate-400">بەپێی کارەکە (Depends)</span>
+                </span>
+              </label>
+
+              <label class="flex cursor-pointer items-center justify-between gap-3 rounded-2xl border border-white/15 bg-white/5 px-4 py-3 transition hover:border-sky-400/40 hover:bg-white/10">
+                <input type="checkbox" name="services" value="شتێکی دیکە" data-price="0" data-depends="true" class="h-5 w-5 rounded-md border-white/30 bg-white/10 text-sky-500 focus:ring-2 focus:ring-sky-400/40" />
+                <span class="flex flex-1 items-center justify-between gap-3 text-right [unicode-bidi:plaintext]">
+                  <span class="font-medium text-slate-100">شتێکی دیکە (Other)</span>
+                  <span class="text-xs text-slate-400">-</span>
+                </span>
+              </label>
+            </div>
+
+            <p id="services-error" class="mt-2 hidden text-right text-xs text-red-300 [unicode-bidi:plaintext]">تکایە لانیکەم یەک خزمەتگوزاری هەڵبژێرە.</p>
+
+            <div class="mt-4 rounded-2xl border border-sky-400/30 bg-sky-500/10 px-5 py-4 text-right [unicode-bidi:plaintext]">
+              <p class="text-sm text-slate-300">کۆی نرخی پێشبینیکراو</p>
+              <p id="total-price" class="mt-1 text-2xl font-bold text-white">٠ دینار</p>
+              <p id="total-note" class="mt-1 hidden text-xs text-amber-300"></p>
+            </div>
           </div>
 
           <div>
@@ -133,24 +189,79 @@
       const form = document.getElementById('order-form');
       const statusBox = document.getElementById('form-status');
       const submitBtn = document.getElementById('submit-btn');
+      const serviceCheckboxes = Array.from(document.querySelectorAll('input[name="services"]'));
+      const servicesError = document.getElementById('services-error');
+      const totalPriceEl = document.getElementById('total-price');
+      const totalNoteEl = document.getElementById('total-note');
+
+      function toArabicDigits(n) {
+        const arabic = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+        return n.toLocaleString('en-US').replace(/[0-9]/g, (d) => arabic[d]);
+      }
+
+      function getSelected() {
+        return serviceCheckboxes.filter((cb) => cb.checked);
+      }
+
+      function updateTotal() {
+        const selected = getSelected();
+        let total = 0;
+        const dependsLabels = [];
+
+        selected.forEach((cb) => {
+          total += Number(cb.dataset.price || 0);
+          if (cb.dataset.depends === 'true') {
+            dependsLabels.push(cb.value);
+          }
+        });
+
+        totalPriceEl.textContent = toArabicDigits(total) + ' دینار';
+
+        if (dependsLabels.length) {
+          totalNoteEl.textContent = '+ نرخی ' + dependsLabels.join('، ') + ' دوای پێداچوونەوەی کارەکە دیاری دەکرێت';
+          totalNoteEl.classList.remove('hidden');
+        } else {
+          totalNoteEl.classList.add('hidden');
+        }
+      }
+
+      serviceCheckboxes.forEach((cb) => cb.addEventListener('change', () => {
+        if (getSelected().length > 0) servicesError.classList.add('hidden');
+        updateTotal();
+      }));
+      updateTotal();
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
+
+        const selected = getSelected();
+        if (selected.length === 0) {
+          servicesError.classList.remove('hidden');
+          servicesError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
         submitBtn.disabled = true;
         submitBtn.textContent = 'دەنێردرێت...';
         statusBox.classList.add('hidden');
+
+        const estimatedTotal = selected.reduce((sum, cb) => sum + Number(cb.dataset.price || 0), 0);
+        const hasVariablePricing = selected.some((cb) => cb.dataset.depends === 'true');
 
         try {
           await addDoc(collection(db, 'requests'), {
             name: form.name.value.trim(),
             phone: form.phone.value.trim(),
-            service: form.service.value,
+            services: selected.map((cb) => cb.value),
+            estimatedTotal,
+            hasVariablePricing,
             message: form.message.value.trim(),
             status: 'new',
             createdAt: serverTimestamp()
           });
 
           form.reset();
+          updateTotal();
           statusBox.textContent = 'سوپاس! داواکارییەکەت گەیشت. بەزووترین کاتدا پەیوەندیتان پێوە دەکەین.';
           statusBox.className = 'mt-2 rounded-2xl border border-emerald-400/40 bg-emerald-500/10 px-5 py-4 text-right text-emerald-200 [unicode-bidi:plaintext]';
         } catch (err) {
