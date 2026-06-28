@@ -44,58 +44,122 @@
         <section id="dashboard-section" class="hidden">
 
           <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
-            <h1 class="text-right text-3xl font-bold text-white">داشبۆردی داواکارییەکان</h1>
+            <h1 class="text-right text-3xl font-bold text-white">داشبۆرد</h1>
             <span class="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-300">
               <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
               ڕاستەوخۆ
             </span>
           </div>
 
-          <!-- Stat cards -->
-          <div class="mb-4 grid grid-cols-2 gap-3 md:grid-cols-4">
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-right">
-              <p class="text-xs text-slate-400">کۆی گشتی</p>
-              <p id="stat-total" class="mt-1 text-2xl font-bold text-white">٠</p>
-            </div>
-            <div class="rounded-2xl border border-sky-400/30 bg-sky-500/10 p-4 text-right">
-              <p class="text-xs text-sky-300">تازە</p>
-              <p id="stat-new" class="mt-1 text-2xl font-bold text-sky-200">٠</p>
-            </div>
-            <div class="rounded-2xl border border-amber-400/30 bg-amber-500/10 p-4 text-right">
-              <p class="text-xs text-amber-300">لە کارەکردنیدا</p>
-              <p id="stat-progress" class="mt-1 text-2xl font-bold text-amber-200">٠</p>
-            </div>
-            <div class="rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-4 text-right">
-              <p class="text-xs text-emerald-300">تەواوبووە</p>
-              <p id="stat-done" class="mt-1 text-2xl font-bold text-emerald-200">٠</p>
-            </div>
+          <!-- Main tabs -->
+          <div class="mb-8 flex flex-wrap gap-2">
+            <button id="tab-requests" data-tab="requests" class="main-tab-btn rounded-full border px-5 py-2.5 text-sm font-semibold transition">داواکارییەکان</button>
+            <button id="tab-visitors" data-tab="visitors" class="main-tab-btn rounded-full border px-5 py-2.5 text-sm font-semibold transition">سەردانکەرانی ماڵپەڕ</button>
           </div>
 
-          <div class="mb-8 rounded-2xl border border-violet-400/30 bg-violet-500/10 px-5 py-4 text-right">
-            <p class="text-xs text-violet-300">نرخی پێشبینیکراوی کاری چاوەڕوان (تازە + لە کارەکردنیدا)</p>
-            <p id="stat-pipeline" class="mt-1 text-xl font-bold text-violet-200">٠ دینار</p>
-          </div>
+          <!-- ===================== REQUESTS PANEL ===================== -->
+          <div id="requests-panel">
 
-          <!-- Filters + search -->
-          <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-            <div id="filter-tabs" class="flex flex-wrap gap-2">
-              <button data-filter="all" class="filter-btn rounded-full border px-4 py-2 text-xs font-semibold transition">هەموو</button>
-              <button data-filter="new" class="filter-btn rounded-full border px-4 py-2 text-xs font-semibold transition">تازە</button>
-              <button data-filter="in_progress" class="filter-btn rounded-full border px-4 py-2 text-xs font-semibold transition">لە کارەکردنیدا</button>
-              <button data-filter="done" class="filter-btn rounded-full border px-4 py-2 text-xs font-semibold transition">تەواوبووە</button>
+            <!-- Stat cards -->
+            <div class="mb-4 grid grid-cols-2 gap-3 md:grid-cols-4">
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-right">
+                <p class="text-xs text-slate-400">کۆی گشتی</p>
+                <p id="stat-total" class="mt-1 text-2xl font-bold text-white">٠</p>
+              </div>
+              <div class="rounded-2xl border border-sky-400/30 bg-sky-500/10 p-4 text-right">
+                <p class="text-xs text-sky-300">تازە</p>
+                <p id="stat-new" class="mt-1 text-2xl font-bold text-sky-200">٠</p>
+              </div>
+              <div class="rounded-2xl border border-amber-400/30 bg-amber-500/10 p-4 text-right">
+                <p class="text-xs text-amber-300">لە کارەکردنیدا</p>
+                <p id="stat-progress" class="mt-1 text-2xl font-bold text-amber-200">٠</p>
+              </div>
+              <div class="rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-4 text-right">
+                <p class="text-xs text-emerald-300">تەواوبووە</p>
+                <p id="stat-done" class="mt-1 text-2xl font-bold text-emerald-200">٠</p>
+              </div>
             </div>
-            <input id="search-input" type="text" placeholder="گەڕان بە ناو یان مۆبایل..." dir="rtl"
-              class="w-full max-w-xs rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-slate-100 placeholder:text-slate-500 [unicode-bidi:plaintext] focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/30" />
+
+            <div class="mb-8 rounded-2xl border border-violet-400/30 bg-violet-500/10 px-5 py-4 text-right">
+              <p class="text-xs text-violet-300">نرخی پێشبینیکراوی کاری چاوەڕوان (تازە + لە کارەکردنیدا)</p>
+              <p id="stat-pipeline" class="mt-1 text-xl font-bold text-violet-200">٠ دینار</p>
+            </div>
+
+            <!-- Filters + search -->
+            <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+              <div id="filter-tabs" class="flex flex-wrap gap-2">
+                <button data-filter="all" class="filter-btn rounded-full border px-4 py-2 text-xs font-semibold transition">هەموو</button>
+                <button data-filter="new" class="filter-btn rounded-full border px-4 py-2 text-xs font-semibold transition">تازە</button>
+                <button data-filter="in_progress" class="filter-btn rounded-full border px-4 py-2 text-xs font-semibold transition">لە کارەکردنیدا</button>
+                <button data-filter="done" class="filter-btn rounded-full border px-4 py-2 text-xs font-semibold transition">تەواوبووە</button>
+              </div>
+              <input id="search-input" type="text" placeholder="گەڕان بە ناو یان مۆبایل..." dir="rtl"
+                class="w-full max-w-xs rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-slate-100 placeholder:text-slate-500 [unicode-bidi:plaintext] focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/30" />
+            </div>
+
+            <p id="empty-state" class="hidden rounded-3xl border border-white/10 bg-white/5 p-10 text-center text-slate-400">
+              هیچ داواکارییەک نییە تا ئێستا.
+            </p>
+            <p id="no-match-state" class="hidden rounded-3xl border border-white/10 bg-white/5 p-10 text-center text-slate-400">
+              هیچ داواکارییەک لەگەڵ ئەم گەڕانە نییە.
+            </p>
+
+            <div id="requests-list" class="space-y-5"></div>
           </div>
 
-          <p id="empty-state" class="hidden rounded-3xl border border-white/10 bg-white/5 p-10 text-center text-slate-400">
-            هیچ داواکارییەک نییە تا ئێستا.
-          </p>
-          <p id="no-match-state" class="hidden rounded-3xl border border-white/10 bg-white/5 p-10 text-center text-slate-400">
-            هیچ داواکارییەک لەگەڵ ئەم گەڕانە نییە.
-          </p>
+          <!-- ===================== VISITORS PANEL ===================== -->
+          <div id="visitors-panel" class="hidden">
 
-          <div id="requests-list" class="space-y-5"></div>
+            <div class="mb-4 grid grid-cols-2 gap-3 md:grid-cols-3">
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-right">
+                <p class="text-xs text-slate-400">کۆی سەردانەکان</p>
+                <p id="visit-total" class="mt-1 text-2xl font-bold text-white">٠</p>
+              </div>
+              <div class="rounded-2xl border border-sky-400/30 bg-sky-500/10 p-4 text-right">
+                <p class="text-xs text-sky-300">ئەمڕۆ</p>
+                <p id="visit-today" class="mt-1 text-2xl font-bold text-sky-200">٠</p>
+              </div>
+              <div class="rounded-2xl border border-violet-400/30 bg-violet-500/10 p-4 text-right">
+                <p class="text-xs text-violet-300">بینەرانی جیاواز</p>
+                <p id="visit-unique" class="mt-1 text-2xl font-bold text-violet-200">٠</p>
+              </div>
+            </div>
+
+            <p class="mb-8 rounded-2xl border border-amber-400/20 bg-amber-500/5 px-5 py-3 text-right text-xs leading-6 text-amber-200/80 [unicode-bidi:plaintext]">
+              تێبینی: ماڵپەڕ ناتوانێت ڕەگەزی سەردانکەران (کچ/کور) بناسێتەوە — هیچ ماڵپەڕێک ئەو زانیارییەیە بەدەست نایەنێت بەبێ ئەوەی خۆی سەردانکەر پڕی بکاتەوە. ئەوەی لێرە دیارە تەنیا شوێن و کات و ژمارەی سەردانە.
+            </p>
+
+            <div class="mb-8 grid gap-6 md:grid-cols-2">
+              <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+                <h3 class="mb-4 text-right text-lg font-bold text-white">وڵاتانی سەردانکەران</h3>
+                <div id="country-list" class="space-y-2.5"></div>
+                <p id="country-empty" class="hidden text-right text-sm text-slate-400">هیچ زانیاری شوێنی نییە تا ئێستا.</p>
+              </div>
+              <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+                <h3 class="mb-4 text-right text-lg font-bold text-white">زۆرترین پەڕەی سەردانکراو</h3>
+                <div id="page-list" class="space-y-2.5"></div>
+              </div>
+            </div>
+
+            <h3 class="mb-4 text-right text-lg font-bold text-white">سەردانی ئەم دواییە</h3>
+            <div class="overflow-x-auto rounded-3xl border border-white/10">
+              <table class="min-w-full text-right">
+                <thead class="bg-white/10 text-slate-100">
+                  <tr>
+                    <th class="px-4 py-3 text-xs font-semibold">کات</th>
+                    <th class="px-4 py-3 text-xs font-semibold">پەڕە</th>
+                    <th class="px-4 py-3 text-xs font-semibold">شوێن</th>
+                    <th class="px-4 py-3 text-xs font-semibold">جێگە</th>
+                  </tr>
+                </thead>
+                <tbody id="visits-table-body" class="divide-y divide-white/10 bg-slate-950/40 text-sm text-slate-300"></tbody>
+              </table>
+            </div>
+            <p id="visits-empty-state" class="hidden mt-4 rounded-3xl border border-white/10 bg-white/5 p-10 text-center text-slate-400">
+              هیچ سەردانێک تۆمار نەکراوە تا ئێستا.
+            </p>
+          </div>
+
         </section>
       </main>
     </div>
@@ -104,7 +168,7 @@
       import { firebaseConfig } from './firebase-config.js';
       import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js';
       import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js';
-      import { getFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
+      import { getFirestore, collection, query, orderBy, limit, onSnapshot, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
 
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
@@ -120,6 +184,9 @@
       const noMatchState = document.getElementById('no-match-state');
       const searchInput = document.getElementById('search-input');
       const filterBtns = Array.from(document.querySelectorAll('.filter-btn'));
+      const mainTabBtns = Array.from(document.querySelectorAll('.main-tab-btn'));
+      const requestsPanel = document.getElementById('requests-panel');
+      const visitorsPanel = document.getElementById('visitors-panel');
 
       const statTotal = document.getElementById('stat-total');
       const statNew = document.getElementById('stat-new');
@@ -127,14 +194,32 @@
       const statDone = document.getElementById('stat-done');
       const statPipeline = document.getElementById('stat-pipeline');
 
+      const visitTotal = document.getElementById('visit-total');
+      const visitToday = document.getElementById('visit-today');
+      const visitUnique = document.getElementById('visit-unique');
+      const countryList = document.getElementById('country-list');
+      const countryEmpty = document.getElementById('country-empty');
+      const pageList = document.getElementById('page-list');
+      const visitsTableBody = document.getElementById('visits-table-body');
+      const visitsEmptyState = document.getElementById('visits-empty-state');
+
       let unsubscribeRequests = null;
+      let unsubscribeVisits = null;
       let allDocs = [];
       let currentFilter = 'all';
+      let currentTab = 'requests';
 
       const statusMeta = {
         new: { label: 'تازە', activeClasses: 'border-sky-400/60 bg-sky-500/20 text-sky-200', badgeClasses: 'border-sky-400/40 bg-sky-500/10 text-sky-200' },
         in_progress: { label: 'لە کارەکردنیدا', activeClasses: 'border-amber-400/60 bg-amber-500/20 text-amber-200', badgeClasses: 'border-amber-400/40 bg-amber-500/10 text-amber-200' },
         done: { label: 'تەواوبووە', activeClasses: 'border-emerald-400/60 bg-emerald-500/20 text-emerald-200', badgeClasses: 'border-emerald-400/40 bg-emerald-500/10 text-emerald-200' }
+      };
+
+      const pageLabels = {
+        'index.html': 'پەڕەی سەرەتا',
+        'services.html': 'نرخ و خزمەتگوزارییەکان',
+        'portfolio.html': 'نموونەی کارەکانمان',
+        'order.html': 'داواکردنی خزمەتگوزاری'
       };
 
       const inactiveBtnClasses = 'border-white/20 bg-white/10 text-slate-100 hover:bg-white/20';
@@ -152,6 +237,11 @@
         return digits;
       }
 
+      function isMobileUA(ua) {
+        return /Mobile|Android|iPhone|iPad/i.test(ua || '');
+      }
+
+      // -------- Auth --------
       loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         loginError.classList.add('hidden');
@@ -172,15 +262,36 @@
           loginSection.classList.add('hidden');
           dashboardSection.classList.remove('hidden');
           logoutBtn.classList.remove('hidden');
-          startListening();
+          startListeningRequests();
+          startListeningVisits();
         } else {
           dashboardSection.classList.add('hidden');
           loginSection.classList.remove('hidden');
           logoutBtn.classList.add('hidden');
           if (unsubscribeRequests) { unsubscribeRequests(); unsubscribeRequests = null; }
+          if (unsubscribeVisits) { unsubscribeVisits(); unsubscribeVisits = null; }
         }
       });
 
+      // -------- Main tabs --------
+      mainTabBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          currentTab = btn.dataset.tab;
+          updateMainTabStyles();
+        });
+      });
+
+      function updateMainTabStyles() {
+        mainTabBtns.forEach((btn) => {
+          const isActive = btn.dataset.tab === currentTab;
+          btn.className = 'main-tab-btn rounded-full border px-5 py-2.5 text-sm font-semibold transition ' +
+            (isActive ? 'border-sky-400/60 bg-sky-500/20 text-sky-200' : inactiveBtnClasses);
+        });
+        requestsPanel.classList.toggle('hidden', currentTab !== 'requests');
+        visitorsPanel.classList.toggle('hidden', currentTab !== 'visitors');
+      }
+
+      // -------- Requests filter tabs --------
       filterBtns.forEach((btn) => {
         btn.addEventListener('click', () => {
           currentFilter = btn.dataset.filter;
@@ -198,7 +309,8 @@
         });
       }
 
-      function startListening() {
+      // -------- Requests data --------
+      function startListeningRequests() {
         const q = query(collection(db, 'requests'), orderBy('createdAt', 'desc'));
         unsubscribeRequests = onSnapshot(q, (snapshot) => {
           allDocs = snapshot.docs.map((d) => ({ id: d.id, data: d.data() }));
@@ -337,6 +449,113 @@
         return card;
       }
 
+      // -------- Visitors data --------
+      function startListeningVisits() {
+        const q = query(collection(db, 'pageviews'), orderBy('createdAt', 'desc'), limit(500));
+        unsubscribeVisits = onSnapshot(q, (snapshot) => {
+          const visits = snapshot.docs.map((d) => d.data());
+          renderVisitors(visits);
+        }, (err) => {
+          console.error(err);
+        });
+      }
+
+      function renderVisitors(visits) {
+        const total = visits.length;
+        const uniqueIds = new Set(visits.map((v) => v.visitorId).filter(Boolean));
+        const now = new Date();
+        const todayCount = visits.filter((v) => {
+          if (!v.createdAt) return false;
+          const d = v.createdAt.toDate();
+          return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth() && d.getDate() === now.getDate();
+        }).length;
+
+        visitTotal.textContent = toArabicDigits(total);
+        visitToday.textContent = toArabicDigits(todayCount);
+        visitUnique.textContent = toArabicDigits(uniqueIds.size);
+
+        // Country breakdown
+        const countryCounts = {};
+        visits.forEach((v) => {
+          const label = v.country ? (v.city ? `${v.city}, ${v.country}` : v.country) : null;
+          if (!label) return;
+          countryCounts[label] = (countryCounts[label] || 0) + 1;
+        });
+        const sortedCountries = Object.entries(countryCounts).sort((a, b) => b[1] - a[1]).slice(0, 8);
+
+        countryList.innerHTML = '';
+        if (sortedCountries.length === 0) {
+          countryEmpty.classList.remove('hidden');
+        } else {
+          countryEmpty.classList.add('hidden');
+          const maxCount = sortedCountries[0][1];
+          sortedCountries.forEach(([label, count]) => {
+            const row = document.createElement('div');
+            row.className = 'text-right [unicode-bidi:plaintext]';
+            const pct = Math.max(8, Math.round((count / maxCount) * 100));
+            row.innerHTML = `
+              <div class="mb-1 flex items-center justify-between text-sm">
+                <span class="font-semibold text-sky-300">${toArabicDigits(count)}</span>
+                <span class="text-slate-200">${escapeHtml(label)}</span>
+              </div>
+              <div class="h-1.5 w-full rounded-full bg-white/10">
+                <div class="h-1.5 rounded-full bg-sky-500" style="width:${pct}%"></div>
+              </div>
+            `;
+            countryList.appendChild(row);
+          });
+        }
+
+        // Page breakdown
+        const pageCounts = {};
+        visits.forEach((v) => {
+          const key = v.page || 'index.html';
+          pageCounts[key] = (pageCounts[key] || 0) + 1;
+        });
+        const sortedPages = Object.entries(pageCounts).sort((a, b) => b[1] - a[1]);
+
+        pageList.innerHTML = '';
+        const maxPageCount = sortedPages.length ? sortedPages[0][1] : 1;
+        sortedPages.forEach(([key, count]) => {
+          const label = pageLabels[key] || key;
+          const row = document.createElement('div');
+          row.className = 'text-right [unicode-bidi:plaintext]';
+          const pct = Math.max(8, Math.round((count / maxPageCount) * 100));
+          row.innerHTML = `
+            <div class="mb-1 flex items-center justify-between text-sm">
+              <span class="font-semibold text-violet-300">${toArabicDigits(count)}</span>
+              <span class="text-slate-200">${escapeHtml(label)}</span>
+            </div>
+            <div class="h-1.5 w-full rounded-full bg-white/10">
+              <div class="h-1.5 rounded-full bg-violet-500" style="width:${pct}%"></div>
+            </div>
+          `;
+          pageList.appendChild(row);
+        });
+
+        // Recent visits table
+        visitsTableBody.innerHTML = '';
+        if (visits.length === 0) {
+          visitsEmptyState.classList.remove('hidden');
+        } else {
+          visitsEmptyState.classList.add('hidden');
+          visits.slice(0, 30).forEach((v) => {
+            const tr = document.createElement('tr');
+            const time = v.createdAt ? v.createdAt.toDate().toLocaleString('ckb') : '-';
+            const pageLabel = pageLabels[v.page] || v.page || '-';
+            const place = v.country ? (v.city ? `${v.city}, ${v.country}` : v.country) : '-';
+            const device = isMobileUA(v.userAgent) ? 'مۆبایل' : 'کۆمپیوتەر';
+            tr.innerHTML = `
+              <td class="whitespace-nowrap px-4 py-3 text-xs">${escapeHtml(time)}</td>
+              <td class="whitespace-nowrap px-4 py-3 text-xs [unicode-bidi:plaintext]">${escapeHtml(pageLabel)}</td>
+              <td class="whitespace-nowrap px-4 py-3 text-xs [unicode-bidi:plaintext]">${escapeHtml(place)}</td>
+              <td class="whitespace-nowrap px-4 py-3 text-xs">${escapeHtml(device)}</td>
+            `;
+            visitsTableBody.appendChild(tr);
+          });
+        }
+      }
+
       function escapeHtml(str) {
         const div = document.createElement('div');
         div.textContent = str ?? '';
@@ -344,6 +563,7 @@
       }
 
       updateFilterButtonStyles();
+      updateMainTabStyles();
     </script>
   </body>
 </html>
