@@ -75,6 +75,13 @@
           </div>
 
           <div>
+            <label for="telegram" class="mb-2 block text-right text-sm font-semibold text-slate-200">بەکارهێنەری تلیگرام (ئارەزوومەندیت)</label>
+            <input id="telegram" name="telegram" type="text" dir="ltr" placeholder="@username"
+              class="w-full rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-left text-slate-100 placeholder:text-slate-500 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/30" />
+            <p class="mt-1.5 text-right text-xs text-slate-500 [unicode-bidi:plaintext]">ئەگەر تلیگرامت هەیە و دەتەوێت لەو ڕێگەیەوە پەیوەندیمان پێوە بکەیت، ناوی بەکارهێنەرت (username) بنووسە.</p>
+          </div>
+
+          <div>
             <label for="service" class="mb-2 block text-right text-sm font-semibold text-slate-200">خزمەتگوزاری پێویست</label>
             <select id="service" name="service" required
               class="w-full rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-right text-slate-100 [unicode-bidi:plaintext] focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/30">
@@ -143,6 +150,7 @@
           await addDoc(collection(db, 'requests'), {
             name: form.name.value.trim(),
             phone: form.phone.value.trim(),
+            telegram: form.telegram.value.trim().replace(/^@/, ''),
             service: form.service.value,
             message: form.message.value.trim(),
             status: 'new',
